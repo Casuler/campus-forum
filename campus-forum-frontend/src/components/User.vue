@@ -49,7 +49,7 @@ onMounted(async () => {
           <el-dropdown-item @click="goMyspace()" :icon="User">
             个人中心
           </el-dropdown-item>
-          <el-dropdown-item @click="logout()" :icon="SwitchButton">
+          <el-dropdown-item @click="logout()" :icon="SwitchButton" style="color:#a03232">
             退出登录
           </el-dropdown-item>
         </el-dropdown-menu>

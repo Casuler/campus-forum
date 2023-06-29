@@ -1,58 +1,58 @@
 <script setup>
 import {get} from "@/request/request.js";
-import {ElMessage} from "element-plus";
-import router from "@/router";
-import {useStore} from "@/stores/store.js";
-import {onMounted, reactive} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import {
-  Location, Menu as IconMenu, Document, Setting} from '@element-plus/icons-vue';
+  Search, Menu as IconMenu, Document, Files, Setting, Collection
+} from '@element-plus/icons-vue';
 
 import User from '@/components/User.vue'
+import SwitchButton from '@/components/SwitchButton.vue'
 
-const store = useStore()
-
+const isCollapse = ref(false)
+const search = ref('')
 const form = reactive({
-  user:[]
+  user: []
 })
 
+const switchMenu = (tmp) => {
+  if(tmp === true)
+    isCollapse.value=false
+  else if(tmp === false)
+    isCollapse.value=true
+}
+
 const getMe = () => {
-  get('/api/user/me',(message)=> {
+  get('/api/user/me', (message) => {
     form.user = message
   })
 }
 
-const logout = () => {
-  get('/api/auth/logout', (message) => {
-    ElMessage.success(message)
-    store.auth.user = null
-    router.push('/')
-  })
-}
-
-onMounted(async ()=>{
+onMounted(async () => {
   await getMe()
 })
 </script>
 
 <template>
   <div class="layout">
-    <el-container style="height: 100%">
-      <el-aside style="border-right:solid #d3d3d3;width: 250px">
+    <el-container class="container">
+      <el-aside class="aside">
         <div class="logo">
           <el-image
               src="https://cdn.staticaly.com/gh/Gatsby0108/idle_bed/master/2023/06/2835bdcd0fca594c60b19dd6fd72aa7a4d.svg"
               style="height: 50px"
           />
         </div>
+        <SwitchButton class="switchButton" @click="switchMenu(isCollapse)"/>
         <el-menu
             default-active="1-1"
-            style="border:none"
-            @open="handleOpen"
-            @close="handleClose">
+            :collapse="isCollapse"
+            style="border:none">
           <el-sub-menu index="1">
             <template #title>
-              <el-icon><Location/></el-icon>
-              <span>Navigator One</span>
+              <el-icon>
+                <icon-menu/>
+              </el-icon>
+              <span>帖子列表</span>
             </template>
             <el-menu-item-group title="Group One">
               <el-menu-item index="1-1">item one</el-menu-item>
@@ -61,28 +61,42 @@ onMounted(async ()=>{
             <el-menu-item-group title="Group Two">
               <el-menu-item index="1-3">item three</el-menu-item>
             </el-menu-item-group>
-            <el-sub-menu index="1-4">
-              <template #title>item four</template>
-              <el-menu-item index="1-4-1">item one</el-menu-item>
-            </el-sub-menu>
           </el-sub-menu>
           <el-menu-item index="2">
-            <el-icon><icon-menu/></el-icon>
-            <span>Navigator Two</span>
+            <el-icon>
+              <Document/>
+            </el-icon>
+            <span>表白墙</span>
           </el-menu-item>
           <el-menu-item index="3">
-            <el-icon><Document/></el-icon>
-            <span>Navigator Three</span>
+            <el-icon>
+              <Collection />
+            </el-icon>
+            <span>我的收藏</span>
           </el-menu-item>
           <el-menu-item index="4">
-            <el-icon><Setting/></el-icon>
-            <span>Navigator Two</span>
+            <el-icon>
+              <Files />
+            </el-icon>
+            <span>帖子管理</span>
+          </el-menu-item>
+          <el-menu-item index="5">
+            <el-icon>
+              <Setting />
+            </el-icon>
+            <span>网站设置</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
       <el-container>
         <el-header class="header">
-          <div class="placeholder"></div>
+          <div class="placeholder">
+            <el-input
+                v-model="search"
+                placeholder="搜索论坛内容..."
+                style="width: 400px"
+                :prefix-icon="Search"/>
+          </div>
           <User/>
         </el-header>
         <el-main>Main</el-main>
@@ -92,16 +106,33 @@ onMounted(async ()=>{
 </template>
 
 <style lang="less" scoped>
-.layout{
+.layout {
   height: 100vh;
+
+  .container {
+    height: 100%;
+
+    .aside {
+      border-right:1px solid #d3d3d3;
+      width: 250px;
+
+      .logo {
+        text-align: center;
+      }
+
+      .switchButton {
+        margin: 10px 60px;
+      }
+    }
+  }
 }
-.logo{
-  text-align:center;
-}
-.header{
+
+.header {
   display: flex;
-  border-bottom: solid #d3d3d3;
-  .placeholder{
+  border-bottom: 1px solid #d3d3d3;
+  align-items: center;
+
+  .placeholder {
     flex: 1;
   }
 }
