@@ -6,7 +6,7 @@ import {
 } from '@element-plus/icons-vue';
 
 import User from '@/components/User.vue'
-import SwitchButton from '@/components/SwitchButton.vue'
+import SwitchButton from '@/components/switchButton.vue'
 import router from "@/router/index.js";
 
 const isCollapse = ref(false)
@@ -96,7 +96,9 @@ onMounted(async () => {
           <User/>
         </el-header>
         <el-main style="padding: 0">
-          <router-view/>
+          <el-scrollbar style="height: 100%">
+            <router-view/>
+          </el-scrollbar>
         </el-main>
       </el-container>
     </el-container>

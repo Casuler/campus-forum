@@ -2,8 +2,8 @@
 import { reactive, ref } from 'vue'
 import { Message, EditPen, Lock } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
-import {post} from "@/request/request";
-import router from "@/router";
+import {post} from "@/request/request.js";
+import router from "@/router/index.js";
 const form = reactive({
   email: '',
   code: '',

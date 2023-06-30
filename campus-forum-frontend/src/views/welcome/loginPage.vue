@@ -2,9 +2,9 @@
 import {User, Lock} from '@element-plus/icons-vue'
 import {reactive} from 'vue'
 import {ElMessage} from 'element-plus'
-import {get, post} from "@/request/request";
-import router from '@/router'
-import {useStore} from "@/stores/store";
+import {get, post} from "@/request/request.js";
+import router from '@/router/index.js'
+import {useStore} from "@/stores/store.js";
 
 const store = useStore()
 

@@ -1,9 +1,9 @@
 <script setup>
 import { User, Lock, Message, EditPen } from '@element-plus/icons-vue'
-import router from '@/router'
+import router from '@/router/index.js'
 import { reactive, ref } from 'vue'
 import {ElMessage} from 'element-plus'
-import {post} from "@/request/request";
+import {post} from "@/request/request.js";
 
 const form = reactive({
   username: '',

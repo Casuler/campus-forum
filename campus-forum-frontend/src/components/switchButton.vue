@@ -3,13 +3,13 @@ import {ref} from "vue";
 
 const isActive = ref(false)
 
-const SwitchButton = () => {
+const switchButton = () => {
   isActive.value=!isActive.value
 }
 </script>
 
 <template>
-  <div id="g-btn" @click="SwitchButton" :class="{'active' : isActive}"></div>
+  <div id="g-btn" @click="switchButton" :class="{'active' : isActive}"></div>
 </template>
 
 <style lang="less" scoped>
