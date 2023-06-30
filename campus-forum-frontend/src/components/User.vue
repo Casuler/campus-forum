@@ -17,6 +17,7 @@ const logout = () => {
   get('/api/auth/logout', (message) => {
     ElMessage.success(message)
     store.auth.user = null
+    localStorage.removeItem("user")
     router.push('/')
   })
 }
@@ -28,7 +29,7 @@ const getMe = () => {
 }
 
 const goMyspace = () => {
-  router.push('/myspace')
+  router.push('/index/settings')
 }
 
 onMounted(async () => {
@@ -46,10 +47,10 @@ onMounted(async () => {
       <el-avatar :src="form.user.avatar" :size="50" alt=""/>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item @click="goMyspace()" :icon="User">
+          <el-dropdown-item @click="goMyspace" :icon="User">
             个人中心
           </el-dropdown-item>
-          <el-dropdown-item @click="logout()" :icon="SwitchButton" style="color:#a03232">
+          <el-dropdown-item @click="logout" :icon="SwitchButton" style="color:#a03232">
             退出登录
           </el-dropdown-item>
         </el-dropdown-menu>

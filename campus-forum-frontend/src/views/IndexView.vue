@@ -2,11 +2,12 @@
 import {get} from "@/request/request.js";
 import {onMounted, reactive, ref} from "vue";
 import {
-  Search, Menu as IconMenu, Document, Files, Setting, Collection
+  Search, Menu as IconMenu, Document, Files, Setting, Collection, Expand, Fold
 } from '@element-plus/icons-vue';
 
 import User from '@/components/User.vue'
 import SwitchButton from '@/components/SwitchButton.vue'
+import router from "@/router/index.js";
 
 const isCollapse = ref(false)
 const search = ref('')
@@ -35,33 +36,24 @@ onMounted(async () => {
 <template>
   <div class="layout">
     <el-container class="container">
-      <el-aside class="aside">
+      <el-aside class="aside" :class="isCollapse ? 'fold-aside':'aside'">
         <div class="logo">
           <el-image
               src="https://cdn.staticaly.com/gh/Gatsby0108/idle_bed/master/2023/06/2835bdcd0fca594c60b19dd6fd72aa7a4d.svg"
               style="height: 50px"
           />
         </div>
-        <SwitchButton class="switchButton" @click="switchMenu(isCollapse)"/>
         <el-menu
-            default-active="1-1"
+            :default-active="router.currentRoute.value.path"
+            router
             :collapse="isCollapse"
             style="border:none">
-          <el-sub-menu index="1">
-            <template #title>
+          <el-menu-item index="/index">
               <el-icon>
                 <icon-menu/>
               </el-icon>
               <span>帖子列表</span>
-            </template>
-            <el-menu-item-group title="Group One">
-              <el-menu-item index="1-1">item one</el-menu-item>
-              <el-menu-item index="1-2">item two</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="Group Two">
-              <el-menu-item index="1-3">item three</el-menu-item>
-            </el-menu-item-group>
-          </el-sub-menu>
+          </el-menu-item>
           <el-menu-item index="2">
             <el-icon>
               <Document/>
@@ -90,6 +82,9 @@ onMounted(async () => {
       </el-aside>
       <el-container>
         <el-header class="header">
+          <el-button text @click="switchMenu(isCollapse)"
+                     :icon="isCollapse ? Expand:Fold"
+                     style="font-size: 25px"/>
           <div class="placeholder">
             <el-input
                 v-model="search"
@@ -97,9 +92,12 @@ onMounted(async () => {
                 style="width: 400px"
                 :prefix-icon="Search"/>
           </div>
+          <SwitchButton class="switchButton"/>
           <User/>
         </el-header>
-        <el-main>Main</el-main>
+        <el-main style="padding: 0">
+          <router-view/>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -115,14 +113,15 @@ onMounted(async () => {
     .aside {
       border-right:1px solid #d3d3d3;
       width: 250px;
+      transition: .5s;
 
       .logo {
         text-align: center;
       }
-
-      .switchButton {
-        margin: 10px 60px;
-      }
+    }
+    .fold-aside {
+      border-right:1px solid #d3d3d3;
+      width: 60px;
     }
   }
 }
@@ -131,9 +130,14 @@ onMounted(async () => {
   display: flex;
   border-bottom: 1px solid #d3d3d3;
   align-items: center;
+  padding: 0 20px 0 0;
 
   .placeholder {
     flex: 1;
+    text-align: center;
+  }
+  .switchButton {
+    margin: 10px 60px;
   }
 }
 </style>

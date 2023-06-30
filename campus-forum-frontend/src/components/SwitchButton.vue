@@ -3,17 +3,13 @@ import {ref} from "vue";
 
 const isActive = ref(false)
 
-const SwitchButton = (tmp) => {
-  if(tmp === false){
-    isActive.value = true
-  }else if(tmp === true) {
-    isActive.value = false
-  }
+const SwitchButton = () => {
+  isActive.value=!isActive.value
 }
 </script>
 
 <template>
-  <div id="g-btn" @click="SwitchButton(isActive)" :class="{'active' : isActive}"></div>
+  <div id="g-btn" @click="SwitchButton" :class="{'active' : isActive}"></div>
 </template>
 
 <style lang="less" scoped>
@@ -25,15 +21,12 @@ div {
   width: 120px;
   height: 40px;
   background:
-      radial-gradient(circle at 18% 20px, #fff, #fff 6px, transparent 7px, transparent),
-      radial-gradient(circle at 35% 45px, #fff, #fff 1px, transparent 2px, transparent),
-      radial-gradient(circle at 10% 70px, #fff, #fff 2.5px, transparent 3.5px, transparent),
-      radial-gradient(circle at 25% 15px, #fff, #fff 3px, transparent 4px, transparent),
-      radial-gradient(circle at 15% 50px, #fff, #fff 1.5px, transparent 2.5px, transparent),
-      radial-gradient(circle at 30% 75px, #fff, #fff 5px, transparent 6px, transparent),
-      radial-gradient(circle at 5% 30px, #fff, #fff 0.5px, transparent 1.5px, transparent),
-      radial-gradient(circle at 25% 60px, #fff, #fff 0.5px, transparent 1.5px, transparent),
-      radial-gradient(circle at 7% 35px, #fff, #fff 0.5px, transparent 1.5px, transparent),
+      radial-gradient(circle at 5% 15px, #fff, #fff 6px, transparent 7px, transparent),
+      radial-gradient(circle at 10% 15px, #fff, #fff 1px, transparent 2px, transparent),
+      radial-gradient(circle at 15% 18px, #fff, #fff 2.5px, transparent 3.5px, transparent),
+      radial-gradient(circle at 10% 18px, #fff, #fff 2.5px, transparent 3.5px, transparent),
+      radial-gradient(circle at 20% 10px, #fff, #fff 0.5px, transparent 1.5px, transparent),
+      radial-gradient(circle at 7% 30px, #fff, #fff 0.5px, transparent 1.5px, transparent),
       linear-gradient(90deg, #2b303e, #2b303e 50%, #5a81b4 50%, #5a81b4);
   background-repeat: no-repeat;
   background-size: 200% 100%;
